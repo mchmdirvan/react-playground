@@ -3,13 +3,17 @@ import { useState } from "react";
 function App() {
   const [formFields, setFormFields] = useState([{ name: "", age: "" }]);
 
-  const handleFormChange = (event, index) => {
+  const handleFormChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const data = [...formFields];
-    data[index][event.target.name] = event.target.value;
+    data[index][event.target.name as keyof (typeof data)[0]] =
+      event.target.value;
     setFormFields(data);
   };
 
-  const submit = (event) => {
+  const submit = (event: React.FormEvent) => {
     event.preventDefault();
     console.log(formFields);
   };
@@ -23,7 +27,7 @@ function App() {
     setFormFields([...formFields, object]);
   };
 
-  const removeFields = (index) => {
+  const removeFields = (index: number) => {
     const data = [...formFields];
     data.splice(index, 1);
     setFormFields(data);
