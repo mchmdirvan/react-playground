@@ -1,3 +1,24 @@
+import { Document, Page, PDFViewer, Text, View } from "@react-pdf/renderer";
+import { styles } from "./components/style";
+
 export default function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  const MyDocument = () => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.section}>
+          <Text>Section #1</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>Section #2</Text>
+        </View>
+      </Page>
+    </Document>
+  );
+  return (
+    <div className="w-full h-[750px]">
+      <PDFViewer width="100%" height="100%">
+        <MyDocument />
+      </PDFViewer>
+    </div>
+  );
 }
