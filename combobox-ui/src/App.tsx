@@ -13,13 +13,16 @@ import {
   useComboboxAnchor,
 } from "@/components/ui/combobox"
 
-const frameworks = [
-  "Next.js",
-  "SvelteKit",
-  "Nuxt.js",
-  "Remix",
-  "Astro",
-] as const
+type Framework = {
+  label: string
+  value: string
+}
+
+const frameworks: Framework[] = [
+  { label: "Next.js", value: "next" },
+  { label: "SvelteKit", value: "sveltekit" },
+  { label: "Nuxt", value: "nuxt" },
+]
 
 export function App() {
   const anchor = useComboboxAnchor()
@@ -30,14 +33,14 @@ export function App() {
           multiple
           autoHighlight
           items={frameworks}
-          defaultValue={[frameworks[0]]}
+          itemToStringValue={(framework: Framework) => framework.label}
         >
           <ComboboxChips ref={anchor} className="w-full max-w-xs">
             <ComboboxValue>
-              {(values) => (
+              {(values: Framework[]) => (
                 <React.Fragment>
-                  {values.map((value: string) => (
-                    <ComboboxChip key={value}>{value}</ComboboxChip>
+                  {values.map((value) => (
+                    <ComboboxChip key={value.value}>{value.label}</ComboboxChip>
                   ))}
                   <ComboboxChipsInput />
                 </React.Fragment>
@@ -47,9 +50,9 @@ export function App() {
           <ComboboxContent anchor={anchor}>
             <ComboboxEmpty>No items found.</ComboboxEmpty>
             <ComboboxList>
-              {(item) => (
-                <ComboboxItem key={item} value={item}>
-                  {item}
+              {(item: Framework) => (
+                <ComboboxItem key={item.value} value={item}>
+                  {item.label}
                 </ComboboxItem>
               )}
             </ComboboxList>
